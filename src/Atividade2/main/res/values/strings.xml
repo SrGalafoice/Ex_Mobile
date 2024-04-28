@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Atividade2</string>
+    <string name="A">Valor de A</string>
+    <string name="B">Valor de B</string>
+    <string name="C">Valor de C</string>
+    <string name="X1">Valor de x1 =</string>
+    <string name="X2">Valor de x2 =</string>
+    <string name="Delta">Valor de delta =</string>
+    <string name="Calc">Calcular</string>
+    <string name="Err">A Equação não tem valores de raizes reais</string>
+</resources>
