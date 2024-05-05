@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AtividadeGas</string>
+    <string name="Resposta">Melhor opção:</string>
+    <string name="Calc">Calcular</string>
+    <string name="vGas">Valor p/L de Gasolina</string>
+    <string name="vEta">Valor p/L de Etanol</string>
+</resources>
