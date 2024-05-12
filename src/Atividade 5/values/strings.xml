@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Dados</string>
+    <string name="Um">Um</string>
+    <string name="Dois">Dois</string>
+    <string name="Tres">Tres</string>
+    <string name="Qnt">Quantidade de dados rolados: </string>
+    <string name="Jogar">Jogar</string>
+    <string name="Tipo">Tipo de dado rolado: </string>
+</resources>
