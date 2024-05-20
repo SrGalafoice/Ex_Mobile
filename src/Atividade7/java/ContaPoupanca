@@ -1,0 +1,19 @@
+package br.edu.fateczl.banco;
+
+
+public class ContaPoupanca extends ContaBancaria{
+    private int dia_rendimento = 31;
+
+    public int getDia_rendimento() {
+        return dia_rendimento;
+    }
+
+    public void setDia_rendimento(int dia_rendimento) {
+        this.dia_rendimento = dia_rendimento;
+    }
+
+    public double calcNovoSaldo(double taxa){
+        float rendimento = (float) (saldo * taxa) * dia_rendimento;
+        return rendimento;
+    }
+}
