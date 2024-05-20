@@ -1,14 +1,19 @@
-<resources>
-    <string name="app_name">Banco</string>
-    <string name="ContaP">Conta Poupanca</string>
-    <string name="ContaE">Conta Especial</string>
-    <string name="Nome">Nome</string>
-    <string name="Tipo">Tipo de conta:</string>
-    <string name="NumConta">Numero da conta</string>
-    <string name="Adicionar">Adicionar</string>
-    <string name="Atualizar">Atualizar</string>
-    <string name="Sacar">Sacar</string>
-    <string name="Depositar">Depositar</string>
-    <string name="Valor">Valor</string>
+package br.edu.fateczl.banco;
 
-</resources>
+public class ContaEspecial extends ContaBancaria {
+    private float limite = -2000;
+
+    public float getLimite() {
+        return limite;
+    }
+
+    public void setLimite(float limite) {
+        this.limite = limite;
+    }
+    public float sacar(float valor){
+        if ((saldo - valor) < limite){
+            return saldo -= valor;
+        }
+        return 0;
+    }
+}
