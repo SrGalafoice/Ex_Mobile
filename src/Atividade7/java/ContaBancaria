@@ -1,0 +1,39 @@
+package br.edu.fateczl.banco;
+
+public class ContaBancaria {
+    private String cliente;
+    private int num_conta;
+    public float saldo;
+    public ContaBancaria(){}
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getNum_conta() {
+        return num_conta;
+    }
+
+    public void setNum_conta(int num_conta) {
+        this.num_conta = num_conta;
+    }
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    public float sacar(float valor){
+        return saldo -= valor;
+    }
+    public float depositar(float valor){
+        return saldo += valor;
+    }
+}
