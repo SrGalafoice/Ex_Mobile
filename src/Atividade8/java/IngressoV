@@ -1,0 +1,9 @@
+package br.edu.fateczl.ingressos;
+
+public class IngressoV extends Ingresso{
+    float valor = 30;
+    public float valorTotal(double taxa){
+        float valortotal;
+        return valortotal = (float) (valor + (valor * taxa)+ (valor * 0.18));
+    }
+}
