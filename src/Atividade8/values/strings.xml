@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ingressos</string>
+    <string name="tipo">Escolha o tipo de ingresso:</string>
+    <string name="Ingresso">Ingresso comum</string>
+    <string name="IngressoV">Ingresso VIP</string>
+    <string name="Comprar">Comprar</string>
+    <string name="Resumo">RESUMO DA COMPRA</string>
+    <string name="Voltar">Voltar</string>
+</resources>
