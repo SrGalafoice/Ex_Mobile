@@ -1,0 +1,10 @@
+package br.edu.fateczl.ingressos;
+
+public class Ingresso {
+    public float valor = 20;
+    public Ingresso(){}
+    public float valorFinal(double taxa){
+        float valortotal;
+        return valortotal = (float) (valor + (valor * taxa));
+    }
+}
