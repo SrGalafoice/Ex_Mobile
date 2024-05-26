@@ -1,0 +1,8 @@
+package br.edu.fateczl.atividade10.Controller;
+
+public interface IGeometriaController<T> {
+    public float calcArea(T t);
+    public float calcPerimetro(T t);
+
+
+}
