@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Atividade10</string>
+    <string name="Circ">Circulo</string>
+    <string name="Ret">Retangulo</string>
+    <string name="Raio">Raio</string>
+    <string name="Base">Base</string>
+    <string name="Altura">Altura</string>
+    <string name="Perimetro">Perimetro</string>
+    <string name="Area">Area</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
