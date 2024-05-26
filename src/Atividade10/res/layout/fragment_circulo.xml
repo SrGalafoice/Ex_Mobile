@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CirculoFragment" >
+
+    <EditText
+        android:id="@+id/etRaio"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="79dp" />
+
+    <Button
+        android:id="@+id/btnAreaC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Area"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="293dp" />
+
+    <Button
+        android:id="@+id/btnPerimetroC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Perimetro"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="290dp" />
+
+    <TextView
+        android:id="@+id/txtVResultadoC"
+        android:layout_width="404dp"
+        android:layout_height="286dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="445dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
