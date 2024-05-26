@@ -1,0 +1,14 @@
+package br.edu.fateczl.atividade10;
+
+public class Circulo {
+    float raio;
+    public Circulo(){}
+
+    public float getRaio() {
+        return raio;
+    }
+
+    public void setRaio(float raio) {
+        this.raio = raio;
+    }
+}
