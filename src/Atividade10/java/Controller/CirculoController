@@ -1,0 +1,18 @@
+package br.edu.fateczl.atividade10.Controller;
+
+import br.edu.fateczl.atividade10.Circulo;
+
+public class CirculoController implements IGeometriaController<Circulo>{
+
+    @Override
+    public float calcArea(Circulo circulo) {
+       float Area = (float) (Math.PI * (circulo.getRaio() * circulo.getRaio()));
+        return Area;
+    }
+
+    @Override
+    public float calcPerimetro(Circulo circulo) {
+        float Perimetro = (float) (2 * Math.PI * circulo.getRaio());
+        return Perimetro;
+    }
+}
