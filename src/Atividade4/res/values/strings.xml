@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Atividade4</string>
+    <string name="Calc">Calcular</string>
+    <string name="Ano">Ano</string>
+    <string name="Mes">Mes</string>
+    <string name="Dia">Dia</string>
+</resources>
