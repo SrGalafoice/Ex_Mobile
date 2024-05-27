@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Professor_App_Android</string>
+    <string name="Titular">Professor Titular</string>
+    <string name="Horista">Professor Horista</string>
+    <string name="Anos">Anos trabalhados</string>
+    <string name="Salario">Salario</string>
+    <string name="Horas">Horas trabalhadas</string>
+    <string name="valorHora">Valor das horas</string>
+    <string name="calcular">Calcular</string>
+    <string name="saida"></string>
+
+</resources>
