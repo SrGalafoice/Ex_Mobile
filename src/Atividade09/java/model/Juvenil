@@ -1,0 +1,26 @@
+package br.edu.fateczl.atividade09.model;
+
+public class Juvenil extends Atleta{
+    private int qtdAnos;
+
+    public Juvenil() {
+    }
+
+    public int getQtdAnos() {
+        return qtdAnos;
+    }
+
+    public void setQtdAnos(int qtdAnos) {
+        this.qtdAnos = qtdAnos;
+    }
+
+    @Override
+    public String toString() {
+        return "Juvenil{" +
+                "Quantidade de anos praticados = " + qtdAnos +'\'' +
+                ", Nome = "+ getNome()+ '\'' +
+                ", Nascimento = "+ getNascimento() + '\'' +
+                ", Bairro="+getBairro()+'\'' +
+                '}';
+    }
+}
