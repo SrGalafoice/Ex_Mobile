@@ -1,0 +1,31 @@
+package br.edu.fateczl.atividade09.controller;
+
+import br.edu.fateczl.atividade09.model.Atleta;
+import br.edu.fateczl.atividade09.model.Comum;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class OperacaoAtletaC implements IOperacaoAtleta<Comum>{
+    private List<Comum> lista;
+
+    public OperacaoAtletaC(){
+        this.lista = new ArrayList<>();
+    }
+
+    @Override
+    public void cadastrar(Comum comum) {
+        lista.add(comum);
+    }
+
+    @Override
+    public List listar() {
+        return this.lista;
+    }
+}
+
+
+
+
+
+
