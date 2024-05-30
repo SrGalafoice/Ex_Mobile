@@ -1,0 +1,44 @@
+package br.edu.fateczl.atividade09.model;
+
+import androidx.annotation.NonNull;
+
+public abstract class Atleta {
+    private String nome, Nascimento, Bairro;
+
+    public Atleta() {
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNascimento() {
+        return Nascimento;
+    }
+
+    public void setNascimento(String Nascimento) {
+        this.Nascimento = Nascimento;
+    }
+
+    public String getBairro() {
+        return Bairro;
+    }
+
+    public void setBairro(String bairro) {
+        Bairro = bairro;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Atleta{" +
+                "Nome = '" + nome + '\'' +
+                ", Nascimento = '" + Nascimento + '\'' +
+                ", Bairro = '" + Bairro + '\'' +
+                '}';
+    }
+}
