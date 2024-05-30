@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_juvenil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JuvenilFragment">
+
+    <EditText
+        android:id="@+id/etAnos"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="83dp"
+        android:ems="10"
+        android:hint="@string/qtdAnos"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etNomeJ"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/nome"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAnos" />
+
+    <EditText
+        android:id="@+id/etNascimentoJ"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="53dp"
+        android:ems="10"
+        android:hint="@string/Nascimento"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNomeJ" />
+
+    <EditText
+        android:id="@+id/etBairroJ"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="55dp"
+        android:ems="10"
+        android:hint="@string/bairro"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/etNascimentoJ"
+        app:layout_constraintTop_toBottomOf="@+id/etNascimentoJ" />
+
+    <Button
+        android:id="@+id/btnCadastrarJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="69dp"
+        android:text="@string/cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no"
+        app:layout_constraintTop_toBottomOf="@+id/etBairroJ" />
+</androidx.constraintlayout.widget.ConstraintLayout>
