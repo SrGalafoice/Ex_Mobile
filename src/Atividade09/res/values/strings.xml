@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">atividade09</string>
+    <string name="actC">Atleta Comum</string>
+    <string name="actJ">Atleta Juvenil</string>
+    <string name="actS">Atleta Senior</string>
+    <string name="nome">Nome</string>
+    <string name="Nascimento">Data de nascimento</string>
+    <string name="bairro">Bairro</string>
+    <string name="qtdAnos">Quantidade de anos de pratica</string>
+    <string name="problema">Tem problema cardiaco?</string>
+    <string name="academia">Academia que compete</string>
+    <string name="recorde">Recorde em segundos</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="escolher">Escolha</string>
+</resources>
