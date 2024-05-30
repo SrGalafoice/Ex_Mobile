@@ -1,0 +1,51 @@
+
+package br.edu.fateczl.atividade09;
+
+import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import br.edu.fateczl.atividade09.OperacaoAtletaS;
+import br.edu.fateczl.atividade09.model.Senior;
+
+
+public class SeniorFragment extends Fragment {
+
+    private EditText etProblema, etNomeS, etNascimentoS, etBairroS;
+    private Button btnCadastrar;
+    private View view;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_senior, container, false);
+        etProblema = view.findViewById(R.id.etProblema);
+        etNome = view.findViewById(R.id.etNomeS);
+        etNascimento = view.findViewById(R.id.etNascimentoS);
+        etBairro = view.findViewById(R.id.etBairroS);
+        btnCadastrar = view.findViewById(R.id.btnCadastrarS);
+
+        btnCadastrar.setOnClickListener(op -> cadastrar());
+
+        return view;
+    }
+
+    private void cadastrar() {
+        Senior senior = new Senior();
+        senior.setProblemaCardiaco(etProblema.getText().toString());
+        senior.setNome(etNome.getText().toString());
+        senior.setNascimento(etNascimento.getText().toString());
+        senior.setBairro(etBairro.getText().toString());
+
+        OperacaoAtletaS op = new OperacaoAtletaS();
+        op.cadastrar(senior);
+        Toast.makeText(getActivity(), s.toString(),
+                Toast.LENGTH_LONG).show();
+    }
+}
