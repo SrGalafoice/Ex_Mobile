@@ -1,0 +1,50 @@
+package br.edu.fateczl.atividade09;
+
+import static java.lang.Integer.parseInt;
+import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import br.edu.fateczl.atividade09.controller.OperacaoAtletaJ;
+import br.edu.fateczl.atividade09.model.Juvenil;
+
+public class JuvenilFragment extends Fragment {
+
+    private EditText etAnos, etNome, etNascimento, etBairro;
+    private Button btnCadastrar;
+    private View view;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_juvenil, container, false);
+        etAnos = view.findViewById(R.id.etAnos);
+        etNome = view.findViewById(R.id.etNomeJ);
+        etNascimento = view.findViewById(R.id.etNascimentoJ);
+        etBairro = view.findViewById(R.id.etBairroJ);
+        btnCadastrar = view.findViewById(R.id.btnCadastrarJ);
+
+        btnCadastrar.setOnClickListener(op -> cadastrar());
+        return view;
+    }
+
+    private void cadastrar() {
+        Juvenil juvenil = new Juvenil();
+        juvenil.setQtdAnos(parseInt(etAnos.getText().toString()));
+        juvenil.setNome(etNome.getText().toString());
+        juvenil.setNascimento(etNascimento.getText().toString());
+        juvenil.setBairro(etBairro.getText().toString());
+
+        OperacaoAtletaJ op = new OperacaoAtletaJ();
+        op.cadastrar(juvenil);
+        Toast.makeText(getActivity(), jv.toString(),
+                Toast.LENGTH_LONG).show();
+    }
+}
