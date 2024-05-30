@@ -1,0 +1,26 @@
+package br.edu.fateczl.atividade09.model;
+
+public class Senior extends Atleta{
+    private String ProblemaCard;
+
+    public Senior(){
+    }
+
+    public String isProblemaCard() {
+        return problemaCard;
+    }
+
+    public void setProblemaCard(String problemaCard) {
+        this.problemaCard = problemaCard;
+    }
+
+    @Override
+    public String toString() {
+        return "Senior{" +
+                "Problema Cardiaco = " + problemaCard + '\'' +
+                ", Nome = "+ getNome()+ '\'' +
+                ", Nascimento="+ getNascimento() + '\'' +
+                ", Bairro="+getBairro()+'\'' +
+                '}';
+    }
+}
