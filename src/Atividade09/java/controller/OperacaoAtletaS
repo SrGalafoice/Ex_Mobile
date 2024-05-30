@@ -1,0 +1,24 @@
+package br.edu.fateczl.atividade09.controller;
+
+import br.edu.fateczl.atividade09.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class OperacaoAtletaS implements IOperacaoAtleta<Senior>{
+    List<Senior>lista;
+
+    public OperacaoSen(){
+        this.lista=new ArrayList<>();
+    }
+    @Override
+    public void cadastrar(Senior senior) {
+        lista.add(senior);
+    }
+
+    @Override
+    public List listar() {
+        return this.lista;
+    }
+}
+
