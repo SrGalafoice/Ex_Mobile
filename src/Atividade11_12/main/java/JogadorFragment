@@ -1,0 +1,212 @@
+package br.edu.fateczl.times;
+
+import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import br.edu.fateczl.times.controller.JogadorController;
+import br.edu.fateczl.times.controller.TimeController;
+import br.edu.fateczl.times.model.Jogador;
+import br.edu.fateczl.times.model.Time;
+import br.edu.fateczl.times.persistence.JogadorDao;
+import br.edu.fateczl.times.persistence.TimeDao;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+
+public class JogadorFragment extends Fragment {
+
+    private View view;
+    private EditText etCodigo, etNome, etDataNasc, etAltura, etPeso, etTime;
+    private Button btnBuscar, btnInserir, btnModificar, btnExcluir, btnListar;
+    private TextView txtvListarJ;
+    private Spinner sp;
+    private JogadorController ContJ;
+    private TimeController ContT;
+    private List<Time> times;
+    public JogadorFragment() {
+        super();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_jogador, container, false);
+        etCodigo = view.findViewById(R.id.etCodigoJ);
+        etNome = view.findViewById(R.id.etNomeJ);
+        etAltura = view.findViewById(R.id.etAlturaJ);
+        etPeso = view.findViewById(R.id.etPesoJ);
+        etTime = view.findViewById(R.id.etTimeJ);
+        etDataNasc = view.findViewById(R.id.etDataNascJ);
+        btnBuscar = view.findViewById(R.id.btnBuscarJ);
+        btnExcluir = view.findViewById(R.id.btnExcluirJ);
+        btnInserir = view.findViewById(R.id.btnInserirJ);
+        btnListar = view.findViewById(R.id.btnListarJ);
+        btnModificar = view.findViewById(R.id.btnModificarJ);
+        txtvListarJ = view.findViewById(R.id.txtvListarJ);
+        txtvListarJ.setMovementMethod(new ScrollingMovementMethod());
+        ContJ = new JogadorController(new JogadorDao(view.getContext()));
+        ContT = new TimeController(new TimeDao(view.getContext()));
+
+        preencheSpinner();
+
+        btnInserir.setOnClickListener(op -> Inserir());
+        btnModificar.setOnClickListener(op -> Modificar());
+        btnExcluir.setOnClickListener(op -> Excluir());
+        btnBuscar.setOnClickListener(op -> Buscar());
+        btnListar.setOnClickListener(op -> Listar());
+
+        return view;
+    }
+
+    private void Inserir() {
+        int spn = sp.getSelectedItemPosition();
+        if(spn > 0){
+            Jogador jogador = geraJogador();
+            try {
+                ContJ.inserir(jogador);
+                Toast.makeText(view.getContext(), "Jogador inserido com sucesso!!",
+                        Toast.LENGTH_LONG).show();
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            limpaCampos();
+        }else{
+            Toast.makeText(view.getContext(), "Selecione um Time",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Modificar() {
+        int spn  = sp.getSelectedItemPosition();
+        if(spn > 0){
+            Jogador jogador = geraJogador();
+            try {
+                ContJ.modificar(jogador);
+                Toast.makeText(view.getContext(), "Jogador atualizado com sucesso",
+                        Toast.LENGTH_LONG).show();
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            limpaCampos();
+        }else{
+            Toast.makeText(view.getContext(), "Selecione um Time", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Excluir() {
+        Jogador jogador = geraJogador();
+        try {
+            ContJ.deletar(jogador);
+            Toast.makeText(view.getContext(), "Jogador excluido com sucesso!!",
+                    Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        limpaCampos();
+
+    }
+
+    private void Buscar() {
+        Jogador jogador = geraJogador();
+        try {
+            times = ContT.listar();
+            jogador = ContJ.buscar(jogador);
+            if(jogador.getNome() != null){
+                preencheCampos(jogador);
+            }else{
+                Toast.makeText(view.getContext(), "Jogador não encontrado! :(",
+                        Toast.LENGTH_LONG).show();
+                limpaCampos();
+            }
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Listar() {
+        try {
+            List<Jogador> jogadores = ContJ.listar();
+            StringBuffer buffer = new StringBuffer();
+            for(Jogador j : jogadores){
+                buffer.append(j.toString()+"\n");
+            }
+            txtvListarJ.setText(buffer.toString());
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void preencheSpinner() {
+        Time time = new Time();
+        time.setCodigo(0);
+        time.setNome("Selecione um time");
+        time.setCidade("");
+
+        try {
+            times = ContT.listar();
+            times.add(0,time);
+
+            ArrayAdapter ad = new ArrayAdapter(view.getContext(),
+                    android.R.layout.simple_spinner_item,
+                    times);
+            ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp.setAdapter(ad);
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Jogador geraJogador(){
+        Jogador jogador = new Jogador();
+        jogador.setNome(etNome.getText().toString());
+        jogador.setDataNasc(LocalDate.parse(etDataNasc.getText().toString()));
+        jogador.setAltura(Float.parseFloat(etAltura.getText().toString()));
+        jogador.setPeso(Float.parseFloat(etPeso.getText().toString()));
+        jogador.setId(Integer.parseInt(etCodigo.getText().toString()));
+        jogador.setTime((Time) sp.getSelectedItem());
+
+        return jogador;
+    }
+
+    public void limpaCampos(){
+        etNome.setText("");
+        etDataNasc.setText("");
+        etCodigo.setText("");
+        etPeso.setText("");
+        etAltura.setText("");
+        sp.setSelection(0);
+    }
+
+    public void preencheCampos(Jogador j){
+        etNome.setText(String.valueOf(j.getNome()));
+        etDataNasc.setText(String.valueOf(j.getDataNasc()));
+        etCodigo.setText(String.valueOf(j.getId()));
+        etPeso.setText(String.valueOf(j.getPeso()));
+        etAltura.setText(String.valueOf(j.getAltura()));
+
+        int i = 1;
+        for(Time t : times){
+            if(t.getCodigo() == j.getTime().getCodigo()){
+                sp.setSelection(i);
+            }else{
+                i++;
+            }
+        }
+        if(i > times.size()){
+            sp.setSelection(0);
+        }
+    }
+}
