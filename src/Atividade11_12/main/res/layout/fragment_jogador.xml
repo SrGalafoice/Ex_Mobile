@@ -83,18 +83,18 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:text="@string/time"
-        app:layout_constraintBottom_toBottomOf="@+id/txtListarJ"
+        app:layout_constraintBottom_toBottomOf="@+id/txtvListarJ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTituloJ"
+        app:layout_constraintTop_toBottomOf="@+id/txtvTituloJ"
         tools:ignore="LabelFor" />
-      <EditText
+
+    <EditText
         android:id="@+id/etDataNascJ"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="197dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="334dp"
         android:ems="10"
@@ -102,12 +102,14 @@
         android:inputType="text"
         android:text="@string/data"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/txtvListarJ"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/etAlturaJ"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etNomeJ"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.541"
         tools:ignore="LabelFor" />
+
     <Button
         android:id="@+id/btnBuscarJ"
         android:layout_width="wrap_content"
@@ -119,23 +121,23 @@
 
     <Button
         android:id="@+id/btnInserirJ"
-        android:layout_width="162dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="14dp"
+        android:layout_width="132dp"
+        android:layout_height="46dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="131dp"
         android:layout_marginBottom="65dp"
         android:text="@string/inserir"
         app:layout_constraintBottom_toBottomOf="@+id/btnExcluirJ"
-        app:layout_constraintEnd_toStartOf="@+id/btnModificarJ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etTimeJ"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnExcluirJ"
-        android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_width="127dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="173dp"
         android:text="@string/excluir"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,6 +154,7 @@
         android:text="@string/modificar"
         app:layout_constraintBottom_toBottomOf="@+id/btnListarJ"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btnInserirJ"
         app:layout_constraintTop_toTopOf="@+id/etTimeJ"
         app:layout_constraintVertical_bias="0.0" />
@@ -163,9 +166,9 @@
         android:layout_marginTop="13dp"
         android:layout_marginBottom="16dp"
         android:text="@string/listar"
-        app:layout_constraintBottom_toTopOf="@+id/tvListarJ"
+        app:layout_constraintBottom_toTopOf="@+id/txtvListarJ"
         app:layout_constraintEnd_toEndOf="@+id/btnModificarJ"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/btnModificarJ"
         app:layout_constraintTop_toBottomOf="@+id/btnInserirJ"
         app:layout_constraintVertical_bias="0.0" />
@@ -177,11 +180,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="1dp"
         android:importantForAutofill="no"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDataNascJ" />
+        app:layout_constraintTop_toBottomOf="@+id/etDataNascJ"
+        app:layout_constraintVertical_bias="0.969" />
 
     <TextView
         android:id="@+id/txtvTituloJ"
