@@ -2,7 +2,7 @@ package br.edu.fateczl.times.persistence;
 
 import android.annotation.SuppressLint;
 
-import com.example.times.model.Jogador;
+import br.edu.fateczl.times.model.Jogador;
 
 import java.sql.SQLException;
 import java.util.List;
