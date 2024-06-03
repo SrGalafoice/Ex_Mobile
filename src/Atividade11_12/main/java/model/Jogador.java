@@ -1,4 +1,4 @@
-package com.example.times.model;
+package br.edu.fateczl.times.model;
 
 import java.time.LocalDate;
 
