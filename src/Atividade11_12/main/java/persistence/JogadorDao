@@ -6,8 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.times.model.Jogador;
-import com.example.times.model.Time;
+import br.edu.fateczl.times.model.Jogador;
+import br.edu.fateczl.times.model.Time;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
