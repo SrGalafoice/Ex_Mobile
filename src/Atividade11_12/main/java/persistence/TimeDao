@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import br.edu.fateczl.times.model.Jogador;
 import br.edu.fateczl.times.model.Time;
 
 import java.sql.SQLException;
