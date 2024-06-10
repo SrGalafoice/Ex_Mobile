@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AlunoFragment">
+
+    <EditText
+        android:id="@+id/etRA"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="@string/RA"
+        android:inputType="number"
+        android:importantForAutofill="no"
+        app:layout_constraintEnd_toStartOf="@+id/btnBuscarA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnBuscarA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="18dp"
+        android:text="@string/buscar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etRA"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etNome"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/nome"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRA" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="27dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnCadastrarA"
+        app:layout_constraintEnd_toStartOf="@+id/btnCadastrarA"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnCadastrarA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etNome" />
+
+    <Button
+        android:id="@+id/btnDeletarA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:text="@string/deletar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAtualizarA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/atualizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvResA"
+        android:layout_width="366dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnListarA" />
+
+    <Button
+        android:id="@+id/btnListarA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="406dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/listar"
+        app:layout_constraintBottom_toTopOf="@+id/tvResA"
+        app:layout_constraintEnd_toStartOf="@+id/btnAtualizarA"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
