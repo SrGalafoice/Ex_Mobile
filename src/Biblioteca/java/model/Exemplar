@@ -1,0 +1,43 @@
+package br.edu.fateczl.biblioteca.model;
+
+import androidx.annotation.NonNull;
+
+public abstract class Exemplar {
+    int codigo, qtdPaginas;
+    String nome;
+    public Exemplar(){
+        super();
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getQtdPaginas() {
+        return qtdPaginas;
+    }
+
+    public void setQtdPaginas(int qtdPaginas) {
+        this.qtdPaginas = qtdPaginas;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return codigo +
+                ", " + qtdPaginas +
+                ", " + nome;
+    }
+}
