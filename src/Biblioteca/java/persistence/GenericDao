@@ -1,0 +1,58 @@
+package br.edu.fateczl.biblioteca.persistence;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+import java.sql.SQLException;
+
+public class GenericDao extends SQLiteOpenHelper {
+    private static final String DATABASE = "BIBLIOTECA.DB";
+    private static final String CREATE_TABLE_ALU = "CREATE TABLE Aluno (" +
+            "    RA INT NOT NULL PRIMARY KEY," +
+            "    nome VARCHAR(100) NOT NULL," +
+            "    email VARCHAR(50) NOT NULL" +
+            ");";
+    private static final String CREATE_TABLE_EXE = "CREATE TABLE Aluno (" +
+            "    COD INT NOT NULL PRIMARY KEY," +
+            "    nome VARCHAR(100) NOT NULL," +
+            "    QtdPag INT(10) NOT NULL" +
+            ");";
+    private static final String CREATE_TABLE_REV = "CREATE TABLE Revista (" +
+            "    EX_Cod INT NOT NULL PRIMARY KEY AUTOINCREMENT," +
+            "    ISSN VARCHAR(100) NOT NULL," +
+            "    Cod INT,"+
+            "    CONSTRAINT fk_PesRevista FOREIGN KEY (Cod) REFERENCES Exemplar (Cod)"+
+            ");";
+    private static final String CREATE_TABLE_LIV = "CREATE TABLE Aluno (" +
+            "    EX_Cod INT NOT NULL PRIMARY KEY AUTOINCREMENT," +
+            "    ISBN VARCHAR(13) NOT NULL," +
+            "    Cod INT,"+
+            "    Edicao INT(10),"+
+            "    CONSTRAINT fk_PesLivro FOREIGN KEY (Cod) REFERENCES Exemplar (Cod)"+
+            ");";
+    private static final String CREATE_TABLE_ALUG = "CREATE TABLE Aluguel (" +
+            "    RA INT NOT NULL PRIMARY KEY," +
+            "    nome VARCHAR(100) NOT NULL," +
+            "    email VARCHAR(100) NOT NULL" +
+            ");";
+
+    private static final int DATABASE_VER = 1;
+
+
+    public GenericDao() {
+        super();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+}
