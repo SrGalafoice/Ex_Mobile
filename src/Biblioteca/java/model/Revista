@@ -1,0 +1,25 @@
+package br.edu.fateczl.biblioteca.model;
+
+import androidx.annotation.NonNull;
+
+public class Revista extends Exemplar {
+    String ISSN;
+    Revista(){}
+
+    public String getISSN() {
+        return ISSN;
+    }
+
+    public void setISSN(String ISSN) {
+        this.ISSN = ISSN;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return ISSN + ", " + nome +
+                ", " + codigo +
+                ", " + qtdPaginas +
+                "paginas.";
+    }
+}
