@@ -1,0 +1,38 @@
+package br.edu.fateczl.biblioteca.model;
+
+import androidx.annotation.NonNull;
+
+public class Livro extends Exemplar {
+    String ISBN;
+    int edicao;
+
+    public Livro(){
+        super();
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public int getEdicao() {
+        return edicao;
+    }
+
+    public void setEdicao(int edicao) {
+        this.edicao = edicao;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return  ISBN + ", "+ nome +
+                ", " + edicao +
+                ", " + codigo +
+                ", " + qtdPaginas +
+                " paginas.";
+    }
+}
