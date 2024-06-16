@@ -1,0 +1,60 @@
+package br.edu.fateczl.acervo.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.acervo.model.Pintura;
+import br.edu.fateczl.acervo.persistence.PinturaDao;
+
+public class PinturaController implements IController<Pintura> {
+    private PinturaDao PD;
+
+    public PinturaController(PinturaDao PD){
+        this.PD = PD;
+    }
+
+    @Override
+    public void Inserir(Pintura pintura) throws SQLException {
+        if (PD.open() == null){
+            PD.open();
+        }
+        PD.insert(pintura);
+        PD.close();
+    }
+
+    @Override
+    public void Excluir(Pintura pintura) throws SQLException {
+        if (PD.open() == null){
+            PD.open();
+        }
+        PD.delete(pintura);
+        PD.close();
+    }
+
+    @Override
+    public void Atualizar(Pintura pintura) throws SQLException {
+        if (PD.open() == null){
+            PD.open();
+        }
+        PD.update(pintura);
+        PD.close();
+    }
+
+    @Override
+    public Pintura Buscar(Pintura pintura) throws SQLException {
+        if (PD.open() == null){
+            PD.open();
+        }
+        return PD.findOne(pintura);
+
+    }
+
+    @Override
+    public List<Pintura> Listar() throws SQLException {
+        if (PD.open() == null){
+            PD.open();
+        }
+        return PD.findAll();
+
+    }
+}
