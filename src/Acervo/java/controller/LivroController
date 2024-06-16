@@ -1,0 +1,61 @@
+package br.edu.fateczl.acervo.controller;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.acervo.model.Livro;
+import br.edu.fateczl.acervo.persistence.LivroDao;
+
+public class LivroController implements IController<Livro>{
+    private LivroDao LD;
+
+    public LivroController(LivroDao livroDao) {
+        this.LD = livroDao;
+    }
+
+    @Override
+    public void Inserir(Livro livro) throws SQLException {
+        if (LD.open() == null){
+            LD.open();
+        }
+        LD.insert(livro);
+        LD.close();
+    }
+
+    @Override
+    public void Excluir(Livro livro) throws SQLException {
+        if (LD.open() == null){
+            LD.open();
+        }
+        LD.delete(livro);
+        LD.close();
+    }
+
+    @Override
+    public void Atualizar(Livro livro) throws SQLException {
+        if (LD.open() == null){
+            LD.open();
+        }
+        int ret = LD.update(livro);
+        LD.close();
+    }
+
+    @Override
+    public Livro Buscar(Livro livro) throws SQLException {
+        if (LD.open() == null){
+            LD.open();
+        }
+
+        return LD.findOne(livro);
+    }
+
+    @Override
+    public List<Livro> Listar() throws SQLException {
+        if (LD.open() == null){
+            LD.open();
+        }
+        return LD.findAll();
+
+    }
+}
