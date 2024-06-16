@@ -1,0 +1,27 @@
+package br.edu.fateczl.acervo.model;
+
+import androidx.annotation.NonNull;
+
+public class Livro extends Item {
+    private String edicao;
+    public Livro(){
+        super();
+    }
+    public String getEdicao() {
+        return edicao;
+    }
+
+    public void setEdicao(String edicao) {
+        this.edicao = edicao;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return titulo +
+                ", " + codigo +
+                ", " + edicao +
+                ", " + ano +
+                ", " + NumPrateleira + ".";
+    }
+}
