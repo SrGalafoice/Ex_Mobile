@@ -1,0 +1,28 @@
+package br.edu.fateczl.acervo.model;
+
+import androidx.annotation.NonNull;
+
+public class Pintura extends Item{
+    private String artista;
+    public Pintura(){
+        super();
+    }
+
+    public String getArtista() {
+        return artista;
+    }
+
+    public void setArtista(String artista) {
+        this.artista = artista;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return titulo +
+                ", " + codigo +
+                ", " + ano +
+                ", " + artista +
+                ", " + NumPrateleira + ".";
+    }
+}
