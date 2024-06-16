@@ -1,0 +1,27 @@
+package br.edu.fateczl.acervo.model;
+
+import androidx.annotation.NonNull;
+
+public class Disco extends Item{
+    private String Duracao;
+    public Disco(){
+        super();
+    }
+    public void setDuracao(String value){
+        this.Duracao = value;
+    }
+
+    public String getDuracao() {
+        return this.Duracao;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return titulo +
+                ", " + codigo +
+                ", " + ano +
+                ", " + Duracao +
+                ", " + NumPrateleira + ".";
+    }
+}
