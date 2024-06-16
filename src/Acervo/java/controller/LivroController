@@ -37,7 +37,7 @@ public class LivroController implements IController<Livro>{
         if (LD.open() == null){
             LD.open();
         }
-        int ret = LD.update(livro);
+        LD.update(livro);
         LD.close();
     }
 
