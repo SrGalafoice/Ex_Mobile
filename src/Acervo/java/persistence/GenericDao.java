@@ -23,12 +23,12 @@ public class GenericDao extends SQLiteOpenHelper{
             "ano INT NOT NULL, "+
             "prat INT NOT NULL, "+
             "duracao VARCHAR(100) NOT NULL);";
-    private static final String CREATE_TABLE_PIN = "CREATE TABLE Pintura { " +
+    private static final String CREATE_TABLE_PIN = "CREATE TABLE Pintura ( " +
             "codigo VARCHAR(100) NOT NULL PRIMARY KEY,"+
             "titulo VARCHAR(100) NOT NULL, " +
             "ano INT NOT NULL, "+
             "prat INT NOT NULL, "+
-            "artista VARCHAR(100) NOT NULL};";
+            "artista VARCHAR(100) NOT NULL);";
 
     public GenericDao(Context context){
         super(context, DATABASE, null, DATABASE_VERSION);
