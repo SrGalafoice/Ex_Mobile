@@ -26,6 +26,7 @@ public class PinturaFragment extends Fragment {
     private Button btnBuscar, btnInserir, btnExcluir, btnAtualizar, btnListar;
 
     private View view;
+    private String codigo;
     private PinturaController PCont;
     public PinturaFragment() {
     }
@@ -114,7 +115,6 @@ public class PinturaFragment extends Fragment {
 
     public Pintura montaPintura() {
         Pintura pintura = new Pintura();
-        String codigo = etCodigo.getText().toString() + "P";
         pintura.setTitulo(etTitulo.getText().toString());
         pintura.setCodigo(codigo);
         pintura.setArtista(etArtista.getText().toString());
@@ -122,13 +122,16 @@ public class PinturaFragment extends Fragment {
         pintura.setNumPrateleira(Integer.parseInt(etPrat.getText().toString()));
         return pintura;
     }
+    private void montaCodigo() {
+        codigo = etCodigo.getText().toString() + "P";
+    }
 
     public void preencheCampos(Pintura pintura) {
         etTitulo.setText(pintura.getTitulo());
         etCodigo.setText(pintura.getCodigo());
         etArtista.setText(pintura.getArtista());
         etAno.setText(String.valueOf(pintura.getAno()));
-        etPrat.setText(String.valueOf(pintura.getAno()));
+        etPrat.setText(String.valueOf(pintura.getNumPrateleira()));
     }
 
     private void limpaCampos() {
