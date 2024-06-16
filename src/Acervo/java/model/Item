@@ -1,0 +1,39 @@
+package br.edu.fateczl.acervo.model;
+
+public abstract class Item {
+    String titulo, codigo;
+    int ano, NumPrateleira;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String nome) {
+        this.titulo = nome;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public int getNumPrateleira() {
+        return NumPrateleira;
+    }
+
+    public void setNumPrateleira(int numPrateleira) {
+        NumPrateleira = numPrateleira;
+    }
+
+}
