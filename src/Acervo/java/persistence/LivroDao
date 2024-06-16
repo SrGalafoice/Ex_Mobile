@@ -1,0 +1,105 @@
+package br.edu.fateczl.acervo.persistence;
+
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.acervo.model.Livro;
+
+public class LivroDao implements ILivroDao, ICRUDDao<Livro> {
+    private final Context context;
+    private GenericDao gD;
+    private SQLiteDatabase db;
+
+    public LivroDao(Context context) {
+        this.context = context;
+    }
+
+
+    @Override
+    public LivroDao open() throws SQLException {
+        gD = new GenericDao(context);
+        db = gD.getWritableDatabase();
+        return this;
+    }
+
+    @Override
+    public void close() {
+        gD.close();
+    }
+
+    @Override
+    public void insert(Livro livro) throws SQLException {
+        ContentValues cv = getContentValues(livro);
+        db.insert("livro", null, cv);
+    }
+
+    @Override
+    public void delete(Livro livro) throws SQLException {
+        db.delete("livro", "codigo = " + livro.getCodigo(), null);
+    }
+
+    @Override
+    public int update(Livro livro) throws SQLException {
+        ContentValues cv = getContentValues(livro);
+        int ret = db.update("livro", cv, "codigo = " + livro.getCodigo(), null);
+        return ret;
+    }
+
+    @SuppressLint("Range")
+    @Override
+    public Livro findOne(Livro livro) throws SQLException {
+        String sql = "SELECT codigo, titulo, ano, prat, edicao FROM livro WHERE codigo = "+ livro.getCodigo();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null){
+            cursor.moveToFirst();
+        } if (!cursor.isAfterLast()){
+            livro.setCodigo(cursor.getString(cursor.getColumnIndex("codigo")));
+            livro.setTitulo(cursor.getString(cursor.getColumnIndex("titulo")));
+            livro.setEdicao(cursor.getString(cursor.getColumnIndex("edicao")));
+            livro.setAno(cursor.getInt(cursor.getColumnIndex("ano")));
+            livro.setNumPrateleira(cursor.getInt(cursor.getColumnIndex("prat")));
+        }
+        cursor.close();
+        return livro;
+    }
+
+    @SuppressLint("Range")
+    @Override
+    public List<Livro> findAll() throws SQLException {
+        List<Livro> livros = new ArrayList<>();
+        String sql = "SELECT codigo, titulo, ano, prat, edicao FROM livro";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null){
+            cursor.moveToFirst();
+        } while (!cursor.isAfterLast()){
+            Livro livro = new Livro();
+            livro.setCodigo(cursor.getString(cursor.getColumnIndex("codigo")));
+            livro.setTitulo(cursor.getString(cursor.getColumnIndex("titulo")));
+            livro.setEdicao(cursor.getString(cursor.getColumnIndex("edicao")));
+            livro.setAno(cursor.getInt(cursor.getColumnIndex("ano")));
+            livro.setNumPrateleira(cursor.getInt(cursor.getColumnIndex("prat")));
+            livros.add(livro);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return livros;
+    }
+
+    private static ContentValues getContentValues(Livro livro) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("codigo", livro.getCodigo());
+        contentValues.put("titulo", livro.getTitulo());
+        contentValues.put("ano", livro.getAno());
+        contentValues.put("prat", livro.getNumPrateleira());
+        contentValues.put("edicao", livro.getEdicao());
+
+        return contentValues;
+    }
+}
