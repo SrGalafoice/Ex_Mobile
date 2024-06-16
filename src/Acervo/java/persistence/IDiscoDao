@@ -1,0 +1,8 @@
+package br.edu.fateczl.acervo.persistence;
+
+import java.sql.SQLException;
+
+public interface IDiscoDao {
+    public DiscoDao open() throws SQLException;
+    public void close();
+}
