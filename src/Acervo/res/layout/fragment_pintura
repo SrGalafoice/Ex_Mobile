@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout4"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PinturaFragment">
+
+    <EditText
+        android:id="@+id/etCodigoP"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="42dp"
+        android:ems="10"
+        android:hint="@string/codigo"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etTituloP"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/titulo"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCodigoP" />
+
+    <EditText
+        android:id="@+id/etArtista"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/artista"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTituloP" />
+
+    <Button
+        android:id="@+id/btnBuscarP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/buscar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etAnoP"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="26dp"
+        android:ems="10"
+        android:hint="@string/ano"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/btnAtualizarP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etArtista" />
+
+    <EditText
+        android:id="@+id/etPratP"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="61dp"
+        android:ems="10"
+        android:hint="@string/numP"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etArtista" />
+
+    <Button
+        android:id="@+id/btnInserirP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="37dp"
+        android:text="@string/inserir"
+        app:layout_constraintStart_toStartOf="@+id/etPratP"
+        app:layout_constraintTop_toBottomOf="@+id/etPratP" />
+
+    <Button
+        android:id="@+id/btnExcluirP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="29dp"
+        android:text="@string/excluir"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAnoP" />
+
+    <Button
+        android:id="@+id/btnAtualizarP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/atualizar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnExcluirP" />
+
+    <Button
+        android:id="@+id/btnListarP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/listar"
+        app:layout_constraintStart_toStartOf="@+id/btnInserirP"
+        app:layout_constraintTop_toBottomOf="@+id/btnInserirP" />
+
+    <TextView
+        android:id="@+id/tvSaidaP"
+        android:layout_width="0dp"
+        android:layout_height="203dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
