@@ -27,6 +27,7 @@ private View view;
 private EditText etTitulo, etCodigo, etEdicao, etAno, etPrat;
 private TextView tvSaida;
 private Button btnBuscar, btnInserir, btnExcluir, btnAtualizar, btnListar;
+private String codigo;
 private LivroController LCont;
 
     public LivroFragment() {
@@ -61,6 +62,7 @@ private LivroController LCont;
     }
 
     private void acaoInserir() {
+        montaCodigo();
         Livro livro = montaLivro();
         try{
             LCont.Inserir(livro);
@@ -68,6 +70,10 @@ private LivroController LCont;
         }catch (SQLException e){
             Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void montaCodigo() {
+        codigo = etCodigo.getText().toString() + "L";
     }
 
     private void acaoExcluir() {
@@ -84,6 +90,7 @@ private LivroController LCont;
         Livro livro = montaLivro();
         try{
             livro = LCont.Buscar(livro);
+            Toast.makeText(view.getContext(),"Livro Encontrado >:)", Toast.LENGTH_LONG).show();
             if (livro != null){
                 preencheCampos(livro);
             }
@@ -118,10 +125,9 @@ private LivroController LCont;
 
     public Livro montaLivro(){
         Livro livro = new Livro();
-        String codigo = etCodigo.getText().toString() + "L";
         livro.setTitulo(etTitulo.getText().toString());
         livro.setCodigo(codigo);
-        livro.setTitulo(etEdicao.getText().toString());
+        livro.setEdicao(etEdicao.getText().toString());
         livro.setAno(Integer.parseInt(etAno.getText().toString()));
         livro.setNumPrateleira(Integer.parseInt(etPrat.getText().toString()));
         return livro;
@@ -131,7 +137,7 @@ private LivroController LCont;
         etCodigo.setText(livro.getCodigo());
         etEdicao.setText(livro.getEdicao());
         etAno.setText(String.valueOf(livro.getAno()));
-        etPrat.setText(String.valueOf(livro.getAno()));
+        etPrat.setText(String.valueOf(livro.getNumPrateleira()));
     }
     private void limpaCampos(){
         etTitulo.setText("");
