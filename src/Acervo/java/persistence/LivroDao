@@ -48,8 +48,7 @@ public class LivroDao implements ILivroDao, ICRUDDao<Livro> {
     @Override
     public int update(Livro livro) throws SQLException {
         ContentValues cv = getContentValues(livro);
-        int ret = db.update("livro", cv, "codigo = " + livro.getCodigo(), null);
-        return ret;
+        return db.update("livro", cv, "codigo = " + livro.getCodigo(), null);
     }
 
     @SuppressLint("Range")
