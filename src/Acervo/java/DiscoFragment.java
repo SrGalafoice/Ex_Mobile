@@ -31,6 +31,7 @@ public class DiscoFragment extends Fragment {
     private TextView tvSaida;
     private Button btnBuscar, btnInserir, btnExcluir, btnAtualizar, btnListar;
     private DiscoController DCont;
+    private String codigo;
 
     public DiscoFragment() {
     }
@@ -64,6 +65,7 @@ public class DiscoFragment extends Fragment {
     }
 
     private void acaoInserir() {
+        montaCodigo();
         Disco disco = montaDisco();
         try {
             DCont.Inserir(disco);
@@ -120,13 +122,15 @@ public class DiscoFragment extends Fragment {
 
     public Disco montaDisco(){
         Disco disco = new Disco();
-        String codigo = etCodigo.getText().toString() + "D";
         disco.setTitulo(etTitulo.getText().toString());
         disco.setCodigo(codigo);
         disco.setDuracao(etDuracao.getText().toString());
         disco.setAno(Integer.parseInt(etAno.getText().toString()));
         disco.setNumPrateleira(Integer.parseInt(etPrat.getText().toString()));
         return disco;
+    }
+    private void montaCodigo() {
+        codigo = etCodigo.getText().toString() + "D";
     }
 
 
