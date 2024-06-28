@@ -1,0 +1,164 @@
+package br.edu.fateczl.relatorios;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.controller.AutorController;
+import br.edu.fateczl.relatorios.controller.ClienteController;
+import br.edu.fateczl.relatorios.controller.ContratoController;
+import br.edu.fateczl.relatorios.controller.RelatorioController;
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Cliente;
+import br.edu.fateczl.relatorios.model.Contrato;
+import br.edu.fateczl.relatorios.model.Relatorio;
+import br.edu.fateczl.relatorios.persistence.AutorDao;
+import br.edu.fateczl.relatorios.persistence.ClienteDao;
+import br.edu.fateczl.relatorios.persistence.ContratoDao;
+import br.edu.fateczl.relatorios.persistence.RelatorioDao;
+
+public class ContratoFragment extends Fragment {
+    private View view;
+    private EditText etDatai, etDataf, etCodigo;
+    private Spinner spnClientes;
+    private Button btnAdicionar, btnDeletar, btnListar;
+    private TextView tvSaida;
+    private ContratoController Cont;
+    private ClienteController CCont;
+    private List<Cliente> clientes = new ArrayList<>();
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_contrato, container, false);
+        etDataf = view.findViewById(R.id.etdataI);
+        etDatai = view.findViewById(R.id.etDataF);
+        etCodigo = view.findViewById(R.id.etCodigo);
+        spnClientes = view.findViewById(R.id.spnClientes);
+        tvSaida = view.findViewById(R.id.tvSaidaC);
+        tvSaida.setMovementMethod(new ScrollingMovementMethod());
+        btnAdicionar = view.findViewById(R.id.btnAdicionarC);
+        btnDeletar = view.findViewById(R.id.btnDeletarC);
+        btnListar = view.findViewById(R.id.btnListarC);
+
+        Cont = new ContratoController(new ContratoDao(view.getContext()));
+        CCont = new ClienteController(new ClienteDao(view.getContext()));
+        preencheSpinner();
+
+        btnAdicionar.setOnClickListener(op -> Adicionar());
+        btnDeletar.setOnClickListener(op -> Deletar());
+        btnListar.setOnClickListener(op -> Listar());
+        return view;
+    }
+
+    private void Adicionar() {
+        int spn = spnClientes.getSelectedItemPosition();
+        if (spn > 0){
+            Contrato c = montaContrato();
+            try {
+                Cont.Inserir(c);
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            Toast.makeText(view.getContext(), "Deu certo!", Toast.LENGTH_LONG).show();
+            limpaCampos();
+        } else {
+            Toast.makeText(view.getContext(),"Um relatório precisa de um autor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private void Deletar() {
+        int spn = spnClientes.getSelectedItemPosition();
+        if (spn > 0){
+            Contrato c = montaContrato();
+            try {
+                Cont.Excluir(c);
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+            }
+            Toast.makeText(view.getContext(), "Deu certo!", Toast.LENGTH_LONG).show();
+            limpaCampos();
+        } else {
+            Toast.makeText(view.getContext(),"Um relatório precisa de um autor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Listar() {
+        try{
+            List<Contrato> contratos = Cont.Listar();
+            StringBuffer buffer = new StringBuffer();
+            for (Contrato c : contratos){
+                buffer.append(c.toString() + "\n");
+            }
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+        }
+    }
+
+    private void preencheSpinner() {
+        Cliente c0 = new Cliente();
+        c0.setEndereco("");
+        c0.setCpf("");
+        c0.setNome("Escolha um cliente...");
+        try {
+            clientes = CCont.Listar();
+            clientes.add(0, c0);
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter(view.getContext(),
+                    android.R.layout.simple_spinner_item);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnClientes.setAdapter(arrayAdapter);
+
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void limpaCampos(){
+        etDatai.setText("");
+        etDataf.setText("");
+        etCodigo.setText("");
+    }
+    private void preencheCampos(Contrato c){
+        etDataf.setText(c.getDatafim().toString());
+        etDatai.setText(c.getDatainicio().toString());
+        etCodigo.setText(c.getCodigo());
+        int i = 1;
+        for (Cliente lulu : clientes){
+            if (lulu.getNome() == c.getCliente().getNome()){
+                spnClientes.setSelection(i);
+            } else i++;
+
+        }
+        if (i > clientes.size()){
+            spnClientes.setSelection(0);
+        }
+    }
+
+    private Contrato montaContrato() {
+        Contrato c = new Contrato();
+        c.setCliente((Cliente) spnClientes.getSelectedItem());
+        c.setDatainicio(LocalDate.parse(etDatai.getText().toString()));
+        c.setDatafim(LocalDate.parse(etDataf.getText().toString()));
+        c.setCodigo(etCodigo.getText().toString());
+        return c;
+    }
+}
