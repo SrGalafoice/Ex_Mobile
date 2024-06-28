@@ -42,6 +42,26 @@ public class ClienteDao implements IClienteDao{
         return database.update("cliente" , contentValues, "nome = " +
                 cliente.getNome(), null);
     }
+
+@SuppressLint("Range")
+    public List<Cliente> findAll() throws SQLException {
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT nome, cpf, endereco, ordem FROM cliente";
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor != null ){
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()){
+            Cliente c = new Cliente();
+            c.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+            c.setCpf(cursor.getString(cursor.getColumnIndex("cpf")));
+            c.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
+            clientes.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return clientes;
+    }
     private static ContentValues getContentValues(Cliente c) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("nome", c.getNome());
