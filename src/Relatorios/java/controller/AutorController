@@ -1,0 +1,39 @@
+package br.edu.fateczl.relatorios.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.persistence.AutorDao;
+
+public class AutorController{
+    private final AutorDao ADao;
+
+    public AutorController(AutorDao ADao){
+        this.ADao = ADao;
+    }
+
+    public void Inserir(Autor autor) throws SQLException {
+        if (ADao == null){
+            ADao.open();
+        }
+        ADao.insert(autor);
+        ADao.close();
+    }
+
+
+    public void Atualizar(Autor autor) throws SQLException {
+        if (ADao == null){
+            ADao.open();
+        }
+        ADao.update(autor);
+        ADao.close();
+    }
+    public List<Autor> Listar() throws SQLException {
+        if (ADao == null){
+            ADao.open();
+        }
+        return ADao.findAll();
+    }
+    }
+
