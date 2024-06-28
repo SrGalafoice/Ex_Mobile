@@ -1,0 +1,38 @@
+package br.edu.fateczl.relatorios.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Cliente;
+import br.edu.fateczl.relatorios.persistence.ClienteDao;
+
+public class ClienteController{
+    private final ClienteDao CDao;
+    public ClienteController(ClienteDao CDao){
+        this.CDao = CDao;
+    }
+    public void Inserir(Cliente cliente) throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        CDao.insert(cliente);
+        CDao.close();
+    }
+
+
+    public void Atualizar(Cliente cliente) throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        CDao.update(cliente);
+        CDao.close();
+    }
+    public List<Cliente> Listar() throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        return CDao.findAll();
+    }
+    }
+
