@@ -37,21 +37,18 @@ public class ContratoDao implements IContratoDao{
         genericDao.close();
     }
 
-    @Override
     public void insert(Contrato contrato) throws SQLException {
         ContentValues contentValues = getContentValues(contrato);
         database.insert("contrato", null, contentValues);
 
     }
 
-    @Override
     public void delete(Contrato c) throws SQLException {
         database.delete("contrato", "codigo = " +
                 c.getCodigo(), null);
     }
 
     @SuppressLint("Range")
-    @Override
     public List<Contrato> findAll() throws SQLException {
         List<Contrato> contratos = new ArrayList<>();
         String sql = "SELECT dataI, dataF, codigo, cliente FROM contrato";
