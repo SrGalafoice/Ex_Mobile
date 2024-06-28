@@ -40,6 +40,26 @@ public class AutorDao implements IAutorDao {
        return database.update("autor", contentValues, "nome = " + autor.getNome(),
                 null);
     }
+@SuppressLint("Range")
+    public List<Autor> findAll() throws SQLException {
+        List<Autor> autores = new ArrayList<>();
+        String sql = "SELECT nome, apelido, anonimato, ordem FROM autor";
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor != null ){
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()){
+            Autor a = new Autor();
+            a.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+            a.setOrdem(Integer.parseInt(cursor.getString(cursor.getColumnIndex("ordem"))));
+            a.setApelido(cursor.getString(cursor.getColumnIndex("apelido")));
+            a.setAnonimato(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("anonimato"))));
+            autores.add(a);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return autores;
+    }
 
 
     private static ContentValues getContentValues(Autor a) {
