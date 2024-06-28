@@ -1,0 +1,9 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import java.sql.SQLException;
+
+public interface IContratoDao {
+    public ContratoDao open() throws SQLException;
+
+    public void close();
+}
