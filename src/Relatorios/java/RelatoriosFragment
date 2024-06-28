@@ -1,0 +1,213 @@
+package br.edu.fateczl.relatorios;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.controller.AutorController;
+import br.edu.fateczl.relatorios.controller.RelatorioController;
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Relatorio;
+import br.edu.fateczl.relatorios.persistence.AutorDao;
+import br.edu.fateczl.relatorios.persistence.RelatorioDao;
+
+public class RelatoriosFragment extends Fragment {
+    private View view;
+    private EditText etTitulo, etTexto, etResumo, etLink, etImagem;
+    private Button btnAdicionar, btnPesquisar, btnAtualizar, btnDeletar, btnListar;
+    private TextView txSaida;
+    private RadioButton rbPriv, rbPub;
+    private Spinner spnAutor;
+    private RelatorioController cont = null;
+    private AutorController Acont = null;
+    private List<Autor> autores = new ArrayList<>();
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_relatorios, container, false);
+        etTitulo = view.findViewById(R.id.etTitulo);
+        etTexto = view.findViewById(R.id.etTexto);
+        etResumo = view.findViewById(R.id.etResumo);
+        etLink = view.findViewById(R.id.etLink);
+        etImagem = view.findViewById(R.id.etImagem);
+        rbPriv = view.findViewById(R.id.rbPriv);
+        rbPub = view.findViewById(R.id.rbPub);
+        rbPub.setClickable(true);
+        txSaida = view.findViewById(R.id.txSaida);
+        txSaida.setMovementMethod(new ScrollingMovementMethod());
+        btnAdicionar = view.findViewById(R.id.btnAdicionarR);
+        btnPesquisar = view.findViewById(R.id.btnPesquisarR);
+        btnAtualizar = view.findViewById(R.id.btnAtualizarR);
+        btnDeletar = view.findViewById(R.id.btnDeletarR);
+        btnListar = view.findViewById(R.id.btnListarR);
+
+        cont = new RelatorioController(new RelatorioDao(view.getContext()));
+        Acont = new AutorController(new AutorDao(view.getContext()));
+        preencheSpinner();
+        btnAdicionar.setOnClickListener(op -> Adicionar());
+        btnPesquisar.setOnClickListener(op -> Pesquisar());
+        btnAtualizar.setOnClickListener(op -> Atualizar());
+        btnDeletar.setOnClickListener(op -> Deletar());
+        btnListar.setOnClickListener(op -> Listar());
+        return view;
+    }
+
+    private void Adicionar() {
+        int spn = spnAutor.getSelectedItemPosition();
+        if (spn > 0){
+            Relatorio r = montaRelatorio();
+            try {
+                cont.Inserir(r);
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            Toast.makeText(view.getContext(), "Deu certo!", Toast.LENGTH_LONG).show();
+            limpaCampos();
+        } else {
+            Toast.makeText(view.getContext(),"Um relatório precisa de um autor", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void Pesquisar() {
+            Relatorio r = montaRelatorio();
+        try {
+            autores = Acont.Listar();
+            r = cont.Buscar(r);
+            if (r.getAutor() != null){
+                preencheCampos(r);
+            } else {
+                Toast.makeText(view.getContext(), "Não deu certo!", Toast.LENGTH_LONG).show();
+                limpaCampos();
+            }
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+        }
+        }
+
+
+    private void Atualizar(){
+        int spn = spnAutor.getSelectedItemPosition();
+        if (spn > 0){
+            Relatorio r = montaRelatorio();
+            try {
+                cont.Atualizar(r);
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+            }
+            Toast.makeText(view.getContext(), "Deu certo!", Toast.LENGTH_LONG).show();
+            limpaCampos();
+        } else {
+            Toast.makeText(view.getContext(),"Um relatório precisa de um autor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Deletar(){
+        int spn = spnAutor.getSelectedItemPosition();
+        if (spn > 0){
+            Relatorio r = montaRelatorio();
+            try {
+                cont.Excluir(r);
+            } catch (SQLException e) {
+                Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+            }
+            Toast.makeText(view.getContext(), "Deu certo!", Toast.LENGTH_LONG).show();
+            limpaCampos();
+        } else {
+            Toast.makeText(view.getContext(),"Um relatório precisa de um autor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Listar() {
+        try{
+            List<Relatorio> relatorios = cont.Listar();
+            StringBuffer buffer = new StringBuffer();
+            for (Relatorio r : relatorios){
+                buffer.append(r.toString() + "\n");
+            }
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();;
+        }
+    }
+    private Relatorio montaRelatorio(){
+        Relatorio r = new Relatorio();
+        r.setAutor((Autor) spnAutor.getSelectedItem());
+        r.setLink(etLink.getText().toString());
+        r.setResumo(etResumo.getText().toString());
+        if (rbPriv.isChecked()){
+            r.setPrivacidade(false);
+        } else r.setPrivacidade(true);
+        r.setTexto(etTexto.getText().toString());
+        r.setImagem(etImagem.getText().toString());
+        r.setTitulo(etTitulo.getText().toString());
+        return r;
+    }
+
+    private void preencheSpinner() {
+        Autor a0 = new Autor();
+        a0.setAnonimato(null);
+        a0.setApelido("");
+        a0.setOrdem(0);
+        a0.setNome("Selecione um autor...");
+        try {
+            autores = Acont.Listar();
+            autores.add(0, a0);
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter(view.getContext(),
+                    android.R.layout.simple_spinner_item);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnAutor.setAdapter(arrayAdapter);
+
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private void limpaCampos(){
+        etImagem.setText("");
+        etLink.setText("");
+        etResumo.setText("");
+        etTexto.setText("");
+        etTitulo.setText("");
+    }
+
+    private void preencheCampos(Relatorio r){
+        etImagem.setText(r.getImagem());
+        etLink.setText(r.getLink());
+        etResumo.setText(r.getResumo());
+        etTexto.setText(r.getTexto());
+        etTitulo.setText(r.getTitulo());
+
+        if(!r.getPrivacidade()){
+            rbPriv.setChecked(true);
+        } else rbPub.setChecked(true);
+
+        int i = 1;
+        for (Autor lulu : autores){
+            if (lulu.getNome() == r.getAutor().getNome()){
+                spnAutor.setSelection(i);
+            } else i++;
+
+        }
+        if (i > autores.size()){
+            spnAutor.setSelection(0);
+        }
+    }
+}
