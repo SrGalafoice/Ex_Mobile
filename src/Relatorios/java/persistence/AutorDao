@@ -1,0 +1,53 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Autor;
+
+public class AutorDao implements IAutorDao {
+    private final Context context;
+
+    private GenericDao genericDao;
+
+    private SQLiteDatabase database;
+    public AutorDao(Context context){
+        this.context = context;
+    }
+    @Override
+    public AutorDao open() throws SQLException {
+        genericDao = new GenericDao(context);
+        database = genericDao.getWritableDatabase();
+        return this;
+    }
+    @Override
+    public void close(){
+        genericDao.close();
+    }
+    public void insert(Autor autor) throws SQLException {
+        ContentValues contentValues = getContentValues(autor);
+        database.insert("autor", null, contentValues);
+    }
+
+    public int update(Autor autor) throws SQLException {
+        ContentValues contentValues = getContentValues(autor);
+       return database.update("autor", contentValues, "nome = " + autor.getNome(),
+                null);
+    }
+
+
+    private static ContentValues getContentValues(Autor a) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nome", a.getNome());
+        contentValues.put("anonimato", a.getAnonimato());
+        contentValues.put("apelido", a.getApelido());
+        contentValues.put("ordem", a.getOrdem());
+        return contentValues;
+    }
+}
