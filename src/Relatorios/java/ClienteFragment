@@ -1,0 +1,76 @@
+package br.edu.fateczl.relatorios;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.sql.SQLException;
+
+import br.edu.fateczl.relatorios.controller.AutorController;
+import br.edu.fateczl.relatorios.controller.ClienteController;
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Cliente;
+import br.edu.fateczl.relatorios.persistence.AutorDao;
+import br.edu.fateczl.relatorios.persistence.ClienteDao;
+
+public class ClienteFragment extends Fragment {
+    private View view;
+    private EditText etNome, etCpf, etEndereco;
+    private Button btnAdicionar, btnAtualizar;
+    private ClienteController cont = null;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_cliente, container, false);
+        etNome = view.findViewById(R.id.etNomeC);
+        etCpf = view.findViewById(R.id.etCpf);
+        etEndereco = view.findViewById(R.id.etEndereco);
+        btnAdicionar = view.findViewById(R.id.btnAdicionarCl);
+        btnAtualizar = view.findViewById(R.id.btnAtualizarCl);
+        cont = new ClienteController(new ClienteDao(view.getContext()));
+        btnAdicionar.setOnClickListener(op -> Adicionar());
+        btnAtualizar.setOnClickListener(op -> Atualizar());
+        return view;
+    }
+
+    private void Adicionar() {
+        Cliente c = montaCliente();
+        try {
+            cont.Inserir(c);
+            Toast.makeText(view.getContext(), "Deu certo :D", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Atualizar() {
+        Cliente c = montaCliente();
+        try {
+            cont.Atualizar(c);
+            Toast.makeText(view.getContext(), "Deu certo :D", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private Cliente montaCliente(){
+        Cliente c = new Cliente();
+        c.setNome(etNome.getText().toString());
+        c.setCpf(etCpf.getText().toString());
+        c.setEndereco(etEndereco.getText().toString());
+        return c;
+    }
+    public void limpaCampos(){
+        etNome.setText("");
+        etCpf.setText("");
+        etEndereco.setText("");
+    }
+}
