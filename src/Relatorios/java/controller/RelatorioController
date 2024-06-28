@@ -1,0 +1,58 @@
+package br.edu.fateczl.relatorios.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Relatorio;
+import br.edu.fateczl.relatorios.persistence.RelatorioDao;
+
+public class RelatorioController implements IController<Relatorio> {
+    private RelatorioDao RDao;
+
+    public RelatorioController(RelatorioDao RDao){
+        this.RDao = RDao;
+    }
+    @Override
+    public void Inserir(Relatorio relatorio) throws SQLException {
+        if (RDao == null){
+            RDao.open();
+        }
+        RDao.insert(relatorio);
+        RDao.close();
+    }
+
+    @Override
+    public void Excluir(Relatorio relatorio) throws SQLException {
+        if (RDao == null){
+            RDao.open();
+        }
+        RDao.delete(relatorio);
+        RDao.close();
+    }
+
+    @Override
+    public void Atualizar(Relatorio relatorio) throws SQLException {
+        if (RDao == null){
+            RDao.open();
+        }
+        RDao.update(relatorio);
+        RDao.close();
+    }
+
+    @Override
+    public Relatorio Buscar(Relatorio relatorio) throws SQLException {
+        if (RDao == null){
+            RDao.open();
+        }
+
+        return RDao.findOne(relatorio);
+    }
+
+    @Override
+    public List<Relatorio> Listar() throws SQLException {
+        if (RDao == null){
+            RDao.open();
+        }
+    return RDao.findAll();
+    }
+}
