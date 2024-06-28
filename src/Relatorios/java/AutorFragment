@@ -1,0 +1,81 @@
+package br.edu.fateczl.relatorios;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import java.sql.SQLException;
+
+import br.edu.fateczl.relatorios.controller.AutorController;
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.persistence.AutorDao;
+
+public class AutorFragment extends Fragment {
+    private View view;
+    private EditText etNome, etApelido, etOrdem;
+    private RadioButton rbAnon, rbPub;
+    private Button btnAdicionar, btnAtualizar;
+    private AutorController cont = null;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_autor, container, false);
+        etNome = view.findViewById(R.id.etNomeA);
+        etApelido = view.findViewById(R.id.etApelido);
+        etOrdem = view.findViewById(R.id.etOrdem);
+        rbAnon = view.findViewById(R.id.rbAnon);
+        rbPub = view.findViewById(R.id.rbPubA);
+        rbPub.setClickable(true);
+        btnAdicionar = view.findViewById(R.id.btnAdicionarA);
+        btnAtualizar = view.findViewById(R.id.btnAtualizar);
+        cont = new AutorController(new AutorDao(view.getContext()));
+        btnAdicionar.setOnClickListener(op -> Adicionar());
+        btnAtualizar.setOnClickListener(op -> Atualizar());
+        return view;
+    }
+
+    private void Adicionar() {
+        Autor a = montaAutor();
+        try {
+            cont.Inserir(a);
+            Toast.makeText(view.getContext(), "Deu certo :D", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void Atualizar() {
+        Autor a = montaAutor();
+        try {
+            cont.Atualizar(a);
+            Toast.makeText(view.getContext(), "Deu certo :D", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private Autor montaAutor(){
+        Autor a = new Autor();
+        if (rbAnon.isChecked()){
+            a.setAnonimato(true);
+        } else a.setAnonimato(false);
+        a.setNome(etNome.getText().toString());
+        a.setOrdem(Integer.parseInt(etOrdem.getText().toString()));
+        a.setApelido(etApelido.getText().toString());
+        return a;
+    }
+    public void limpaCampos(){
+        etNome.setText("");
+        etOrdem.setText("");
+        etApelido.setText("");
+    }
+}
