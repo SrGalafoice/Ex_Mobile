@@ -1,0 +1,52 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.SQLException;
+
+
+import br.edu.fateczl.relatorios.model.Cliente;
+
+public class ClienteDao implements IClienteDao{
+    private final Context context;
+
+    private GenericDao genericDao;
+
+    private SQLiteDatabase database;
+    public ClienteDao(Context context){
+        this.context = context;
+    }
+
+    @Override
+    public ClienteDao open() throws SQLException {
+        genericDao = new GenericDao(context);
+        database = genericDao.getWritableDatabase();
+        return this;
+    }
+    @Override
+    public void close(){
+        genericDao.close();
+    }
+
+
+    public void insert(Cliente cliente) throws SQLException {
+        ContentValues contentValues = getContentValues(cliente);
+        database.insert("cliente", null, contentValues);
+    }
+
+
+    public int update(Cliente cliente) throws SQLException {
+        ContentValues contentValues = getContentValues(cliente);
+        return database.update("cliente" , contentValues, "nome = " +
+                cliente.getNome(), null);
+    }
+    private static ContentValues getContentValues(Cliente c) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nome", c.getNome());
+        contentValues.put("cpf", c.getCpf());
+        contentValues.put("endereco", c.getEndereco());
+        return contentValues;
+    }
+}
