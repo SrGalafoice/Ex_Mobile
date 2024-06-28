@@ -1,0 +1,118 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Relatorio;
+
+public class RelatorioDao implements IRelatorioDao, ICRUDDao<Relatorio> {
+    private final Context context;
+
+    private GenericDao genericDao;
+
+    private SQLiteDatabase database;
+    public RelatorioDao(Context context){
+        this.context = context;
+    }
+    @Override
+    public RelatorioDao open() throws SQLException {
+        genericDao = new GenericDao(context);
+        database = genericDao.getWritableDatabase();
+        return this;
+    }
+    @Override
+    public void close(){
+    genericDao.close();
+    }
+
+    @Override
+    public void insert(Relatorio relatorio) throws SQLException {
+        ContentValues contentValues = getContentValues(relatorio);
+        database.insert("relatorio", null, contentValues);
+
+    }
+
+    @Override
+    public int update(Relatorio relatorio) throws SQLException {
+        ContentValues contentValues = getContentValues(relatorio);
+        int ret = database.update("relatorio", contentValues, "titulo = " +
+                relatorio.getTitulo(), null);
+        return ret;
+    }
+
+    @Override
+    public void delete(Relatorio relatorio) throws SQLException {
+        database.delete("relatorio", "titulo = " +
+                relatorio.getTitulo(), null);
+    }
+
+    @SuppressLint("Range")
+    @Override
+    public Relatorio findOne(Relatorio relatorio) throws SQLException {
+        String sql = "SELECT titulo, texto, imagem, link, privacidade, resumo, autor FROM relatorio WHERE titulo = " + relatorio.getTitulo();
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor != null ){
+            cursor.moveToFirst();
+        }
+        if (!cursor.isAfterLast()){
+            Autor autor = new Autor();
+            relatorio.setTitulo(cursor.getString(cursor.getColumnIndex("titulo")));
+            relatorio.setTexto(cursor.getString(cursor.getColumnIndex("texto")));
+            relatorio.setImagem(cursor.getString(cursor.getColumnIndex("imagem")));
+            relatorio.setLink(cursor.getString(cursor.getColumnIndex("link")));
+            relatorio.setPrivacidade(Boolean.valueOf(cursor.getString(cursor.getColumnIndex("privacidade"))));
+            relatorio.setResumo(cursor.getString(cursor.getColumnIndex("resumo")));
+            autor.setNome(cursor.getString(cursor.getColumnIndex("autor")));
+            relatorio.setAutor(autor);
+        }
+        cursor.close();
+        return relatorio;
+    }
+
+    @SuppressLint("Range")
+    @Override
+    public List<Relatorio> findAll() throws SQLException {
+        List<Relatorio> relatorios = new ArrayList<>();
+        String sql = "SELECT titulo, texto, imagem, link, privacidade, resumo, autor FROM relatorio";
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor != null ){
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()){
+            Relatorio r = new Relatorio();
+            Autor autor = new Autor();
+            r.setTitulo(cursor.getString(cursor.getColumnIndex("titulo")));
+            r.setTexto(cursor.getString(cursor.getColumnIndex("texto")));
+            r.setImagem(cursor.getString(cursor.getColumnIndex("imagem")));
+            r.setLink(cursor.getString(cursor.getColumnIndex("link")));
+            r.setPrivacidade(Boolean.valueOf(cursor.getString(cursor.getColumnIndex("privacidade"))));
+            r.setResumo(cursor.getString(cursor.getColumnIndex("resumo")));
+            autor.setNome(cursor.getString(cursor.getColumnIndex("autor")));
+            r.setAutor(autor);
+            relatorios.add(r);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return relatorios;
+    }
+
+    private static ContentValues getContentValues(Relatorio r) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("titulo", r.getTitulo());
+        contentValues.put("texto", r.getTexto());
+        contentValues.put("imagem", r.getImagem());
+        contentValues.put("link", r.getLink());
+        contentValues.put("privacidade", r.getPrivacidade());
+        contentValues.put("resumo", r.getResumo());
+        contentValues.put("autor", r.getAutor().getNome());
+        return contentValues;
+    }
+}
