@@ -1,0 +1,61 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.List;
+
+public class GenericDao extends SQLiteOpenHelper {
+    private static final String DATABASE = "RELATORIOS_DB";
+    private static final int DATABASE_VER = 1;
+    private static final String CREATE_TAGBLE_REL = "CREATE TABLE relatorio( " +
+            "titulo VARCHAR(100) NOT NULL PRIMARY KEY,"+
+            "texto VARCHAR(100) NOT NULL, " +
+            "resumo VARCHAR(100) NOT NULL, "+
+            "link VARCHAR(100), "+
+            "imagem VARCHAR(100), "+
+            "privacidade BIT NOT NULL,"+
+            "FOREIGN KEY (autor) REFERENCES autor(nome));";
+
+    private static final String CREATE_TAGBLE_AUT = "CREATE TABLE autor( " +
+            "nome VARCHAR(100) NOT NULL PRIMARY KEY,"+
+            "apelido VARCHAR(100), " +
+            "ordem INT NOT NULL, "+
+            "anonimato BIT NOT NULL);";
+
+    private static final String CREATE_TAGBLE_CLI = "CREATE TABLE cliente( " +
+            "cpf VARCHAR(100) NOT NULL PRIMARY KEY,"+
+            "nome VARCHAR(100) NOT NULL, " +
+            "endereco VARCHAR(100) NOT NULL);";
+
+    private static final String CREATE_TAGBLE_CON = "CREATE TABLE contrato( " +
+            "codigo VARCHAR(100) NOT NULL PRIMARY KEY,"+
+            "dataI VARCHAR(100) NOT NULL, " +
+            "dataF VARCHAR(100) NOT NULL, "+
+            "FOREIGN KEY (cliente) REFERENCES cliente(cpf));";
+
+
+    public GenericDao (Context context){
+        super(context, DATABASE, null, DATABASE_VER);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_TAGBLE_REL);
+        db.execSQL(CREATE_TAGBLE_AUT);
+        db.execSQL(CREATE_TAGBLE_CLI);
+        db.execSQL(CREATE_TAGBLE_CON);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion){
+            db.execSQL("DROP TABLE IF EXISTS relatorio");
+            db.execSQL("DROP TABLE IF EXISTS autor");
+            db.execSQL("DROP TABLE IF EXISTS cliente");
+            db.execSQL("DROP TABLE IF EXISTS contrato");
+            onCreate(db);
+        }
+    }
+}
