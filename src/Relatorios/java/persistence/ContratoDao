@@ -1,0 +1,86 @@
+package br.edu.fateczl.relatorios.persistence;
+
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Autor;
+import br.edu.fateczl.relatorios.model.Cliente;
+import br.edu.fateczl.relatorios.model.Contrato;
+import br.edu.fateczl.relatorios.model.Relatorio;
+
+public class ContratoDao implements IContratoDao{
+    private final Context context;
+
+    private GenericDao genericDao;
+
+    private SQLiteDatabase database;
+    public ContratoDao(Context context){
+        this.context = context;
+    }
+
+    @Override
+    public ContratoDao open() throws SQLException {
+        genericDao = new GenericDao(context);
+        database = genericDao.getWritableDatabase();
+        return this;
+    }
+    @Override
+    public void close(){
+        genericDao.close();
+    }
+
+    @Override
+    public void insert(Contrato contrato) throws SQLException {
+        ContentValues contentValues = getContentValues(contrato);
+        database.insert("contrato", null, contentValues);
+
+    }
+
+    @Override
+    public void delete(Contrato c) throws SQLException {
+        database.delete("contrato", "codigo = " +
+                c.getCodigo(), null);
+    }
+
+    @SuppressLint("Range")
+    @Override
+    public List<Contrato> findAll() throws SQLException {
+        List<Contrato> contratos = new ArrayList<>();
+        String sql = "SELECT dataI, dataF, codigo, cliente FROM contrato";
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor != null ){
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()){
+            Contrato c = new Contrato();
+            Cliente cliente = new Cliente();
+            c.setDatainicio(LocalDate.parse(cursor.getString(cursor.getColumnIndex("dataI"))));
+            c.setDatafim(LocalDate.parse(cursor.getString(cursor.getColumnIndex("dataF"))));
+            c.setCodigo(cursor.getString(cursor.getColumnIndex("codigo")));
+            cliente.setNome(cursor.getString(cursor.getColumnIndex("cliente")));
+            c.setCliente(cliente);
+            contratos.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return contratos;
+    }
+    private static ContentValues getContentValues(Contrato c) {
+        ContentValues contentValues = new ContentValues();
+        String dataI = c.getDatainicio().toString();
+        String dataF = c.getDatainicio().toString();
+        contentValues.put("dataI", dataI);
+        contentValues.put("dataF", dataF);
+        contentValues.put("codigo", c.getCodigo());
+        contentValues.put("cliente", c.getCliente().getNome());
+        return contentValues;
+    }
+}
