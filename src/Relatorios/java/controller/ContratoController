@@ -1,0 +1,40 @@
+package br.edu.fateczl.relatorios.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.fateczl.relatorios.model.Contrato;
+import br.edu.fateczl.relatorios.persistence.ClienteDao;
+import br.edu.fateczl.relatorios.persistence.ContratoDao;
+
+public class ContratoController{
+    private final ContratoDao CDao;
+    public ContratoController(ContratoDao CDao){
+        this.CDao = CDao;
+    }
+
+    public void Inserir(Contrato contrato) throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        CDao.insert(contrato);
+        CDao.close();
+    }
+
+
+    public void Excluir(Contrato contrato) throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        CDao.delete(contrato);
+        CDao.close();
+    }
+
+
+    public List<Contrato> Listar() throws SQLException {
+        if (CDao == null){
+            CDao.open();
+        }
+        return CDao.findAll();
+    }
+}
